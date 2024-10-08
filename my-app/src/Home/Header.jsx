@@ -8,6 +8,11 @@ const Header = () => {
   return (
     <header className='myHeader'>
       <Link to='/' className='logo'>Denmap</Link>
+      <div className='links'>
+        <Link to='/'>Games</Link>
+        <a href="#contacts">Contacts</a>
+        <Link to='/'>Example</Link>
+      </div>
       <Auth />
     </header>
   );

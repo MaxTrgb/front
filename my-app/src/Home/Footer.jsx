@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './Home.css';
 
+
 const Footer = () => {
   const [isVisible, setIsVisible] = useState(false);
 
@@ -28,15 +29,34 @@ const Footer = () => {
   }, []);
 
   return (
-    <footer className='myFooter'>
-      
+    <div>
+
       {isVisible && (
         <button onClick={scrollToTop} className="backToTopBtn">
-          Back to Top
+          <img src="https://img.icons8.com/ios/50/000000/up.png" alt="" />
         </button>
       )}
-      <p>© 2024 Denmap. All rights reserved.</p>
-    </footer>
+
+      <footer className='myFooter'>
+        <div id='contacts' className='contacts'>
+          <h3>Follow Us</h3>          
+          <div className="social-icons">
+            <a href="https://t.me" target="_blank" rel="noopener noreferrer">
+              <img src="https://img.icons8.com/ios/50/000000/telegram-app.png" alt="Telegram" />
+            </a>
+            <a href="https://discord.com" target="_blank" rel="noopener noreferrer">
+              <img src="https://img.icons8.com/ios/50/000000/discord-logo.png" alt="Discord" />
+            </a>
+            <a href="https://www.twitch.tv/" target="_blank" rel="noopener noreferrer">
+              <img src="https://img.icons8.com/ios/50/000000/twitch.png" alt="Twitch" />
+            </a>
+          </div>          
+        </div>
+        <p>© 2024 Denmap. All rights reserved.</p>
+      </footer>
+
+    </div>
+
   );
 };
 
