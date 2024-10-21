@@ -62,7 +62,6 @@ const SingleCard = () => {
         const newComment = {
             userId: parseInt(userId, 10),
             postId: parseInt(id, 10),
-            rating: rating,
             message: feedback,
         };
 
@@ -82,9 +81,6 @@ const SingleCard = () => {
             message.success('Feedback submitted successfully');
             setFeedbacks([...feedbacks, { ...newComment, userName }]);
             setFeedback('');
-            setRating(0);
-            window.location.reload();
-
         } catch (error) {
             message.error(error.message);
         }
@@ -101,15 +97,13 @@ const SingleCard = () => {
         const updatedFeedbacks = feedbacks.filter((_, index) => index !== indexToDelete);
         setFeedbacks(updatedFeedbacks);
         message.success('Feedback deleted successfully');
-    }
+    };
 
     const handleEditPost = () => {
-
         navigate(`/edit-post/${post.id}`);
     };
 
     const handleDeletePost = async () => {
-
         try {
             const response = await fetch(`/api/v1/post/${post.id}?userId=${post.user.id}`, {
                 method: 'DELETE',
@@ -126,7 +120,6 @@ const SingleCard = () => {
             message.error(error.message);
         }
     };
-
 
     if (!post) {
         return <div>Loading...</div>;
@@ -175,7 +168,7 @@ const SingleCard = () => {
                         )}
                     </div>
                 </div>
-
+                <RatingSection rating={rating} setRating={setRating} />
                 {userId ? (
                     <div className='feedbackContainer'>
                         <h3>Leave Feedback</h3>
@@ -187,12 +180,6 @@ const SingleCard = () => {
                             rows={4}
                             style={{ marginBottom: '10px' }}
                         />
-                        <div className='rating'>
-                            <Rate
-                                onChange={setRating}
-                                defaultValue={5}
-                            />
-                        </div>
                         <Button
                             type="primary"
                             onClick={handleSubmitFeedback}
@@ -207,13 +194,14 @@ const SingleCard = () => {
                     </div>
                 )}
 
+                
+
                 <div className='submittedFeedbacks' style={{ marginTop: '20px' }}>
                     <h3>Customer Feedback</h3>
                     {feedbacks.length > 0 ? (
                         feedbacks.map((fb, index) => (
                             <div key={index} className='singleFeedback'>
-                                <p>{fb.user?.name}</p>
-                                <Rate disabled value={fb.rating} />
+                                <p>{fb.user?.name}</p>                                
                                 <h2>{fb.message}</h2>
                                 {userId && fb.user?.id === parseInt(userId, 10) && (
                                     <Button
@@ -223,7 +211,6 @@ const SingleCard = () => {
                                         Delete Feedback
                                     </Button>
                                 )}
-
                             </div>
                         ))
                     ) : (
@@ -243,6 +230,16 @@ const SingleCard = () => {
             <Footer />
         </div>
     );
-}
+};
+
+const RatingSection = ({ rating, setRating }) => (
+    <div className='ratingSection'>
+        <h3>Rate the Post</h3>
+        <Rate onChange={setRating} value={rating} />
+        <Button type="primary" className='ratingBtn' style={{ marginTop: '10px' }}>
+            Submit Rating
+        </Button>
+    </div>
+);
 
 export default SingleCard;
